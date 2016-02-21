@@ -19,7 +19,6 @@ public class CacheAspect {
 
     @Around("com.darylmathison.ai.cache.SystemArch.cacheMeCut()")
     public Object simpleCache(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-        System.out.println("before");
         StringBuffer keyBuffer = new StringBuffer();
         for(Object o: proceedingJoinPoint.getArgs()) {
             keyBuffer.append(o.hashCode());
@@ -30,19 +29,16 @@ public class CacheAspect {
             ret = proceedingJoinPoint.proceed();
             cache.put(key, ret);
         }
-        System.out.println("After");
         return ret;
     }
 
     @Around("com.darylmathison.ai.cache.SystemArch.cacheMeNowCut() && @annotation(cacheMeNow)")
     public Object simpleCacheWithParam(ProceedingJoinPoint proceedingJoinPoint, CacheMeNow cacheMeNow) throws Throwable {
-        System.out.println("before");
         Object ret = cache.get(cacheMeNow.key());
         if(ret == null) {
             ret = proceedingJoinPoint.proceed();
             cache.put(cacheMeNow.key(), ret);
         }
-        System.out.println("After");
         return ret;
     }
 }
