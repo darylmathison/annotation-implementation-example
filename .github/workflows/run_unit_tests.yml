@@ -11,24 +11,27 @@ on:
       - 'release/*'
   workflow_dispatch:
 
+env:
+  JAVA_VERSION: 17
+
 jobs:
   unit-tests:
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@main
-    - name: Set up Java 17
+    - name: Set up Java ${{ env.JAVA_VERSION }}
       uses: actions/setup-java@v4.2.1
       with:
         distribution: 'adopt'
-        java-version: '17'
+        java-version: ${{ env.JAVA_VERSION }}
         server-id: github
         settings-path: ${{ github.workspace }}
     - name: Cache maven packages
       uses: actions/cache@v4
       with:
         path: ~/.m2
-        key: maven-${{ hashFiles('**/pom.xml') }}
+        key: maven-java-${{ JAVA_VERSION }}-${{ hashFiles('**/pom.xml') }}
         restore-keys: |
           maven-pip-
     - name: Run unit tests
