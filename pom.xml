@@ -66,7 +66,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.12</version>
+            <version>4.13.1</version>
             <scope>test</scope>
         </dependency>
 
@@ -77,14 +77,14 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>2.7</version>
+                <version>3.5.0</version>
                 <reportSets>
                     <reportSet>
                         <reports>
                             <report>dependencies</report>
                             <report>index</report>
-                            <report>project-team</report>
-                            <report>issue-tracking</report>
+                            <report>team</report>
+                            <report>issue-management</report>
                             <report>scm</report>
                         </reports>
                     </reportSet>

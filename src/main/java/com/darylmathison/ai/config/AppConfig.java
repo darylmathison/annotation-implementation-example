@@ -4,8 +4,10 @@ import com.darylmathison.ai.cache.CacheAspect;
 import com.darylmathison.ai.service.FibonacciService;
 import com.darylmathison.ai.service.FibonacciServiceImpl;
 import com.hazelcast.config.Config;
+import com.hazelcast.config.EvictionConfig;
 import com.hazelcast.config.EvictionPolicy;
 import com.hazelcast.config.MapConfig;
+import com.hazelcast.config.MaxSizePolicy;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 import org.springframework.context.annotation.Bean;
@@ -28,9 +30,12 @@ public class AppConfig {
     public Map<String, Object> cache() {
         Config config = new Config();
         MapConfig mapConfig = new MapConfig();
-        mapConfig.setEvictionPercentage(50);
-        mapConfig.setEvictionPolicy(EvictionPolicy.LFU);
-        mapConfig.setTimeToLiveSeconds(300);
+        EvictionConfig evictionConfig = new EvictionConfig();
+        evictionConfig.setEvictionPolicy(EvictionPolicy.LRU)
+            .setMaxSizePolicy(MaxSizePolicy.PER_NODE).setSize(1000);
+        mapConfig.setEvictionConfig(evictionConfig);
+
+        mapConfig.setMaxIdleSeconds(60);
         Map<String, MapConfig> mapConfigMap = new HashMap<>();
         mapConfigMap.put("cache", mapConfig);
         config.setMapConfigs(mapConfigMap);
