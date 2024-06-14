@@ -60,7 +60,7 @@
         <dependency>
             <groupId>com.hazelcast</groupId>
             <artifactId>hazelcast</artifactId>
-            <version>3.6</version>
+            <version>5.4.0</version>
         </dependency>
 
         <dependency>
